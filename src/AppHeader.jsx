@@ -1,14 +1,27 @@
-import './AppHeader.css';
+import React, { useContext } from 'react';
+import { FontContext } from './FontContext';
 
-export function AppHeader({imie, nazwisko, onZmianaCzcionki}) {
-    const czcionki = ['small', 'medium', 'large'];
+export function AppHeader({ imie, nazwisko }) {
+  const { czcionka, setCzcionka } = useContext(FontContext);
+  const czcionki = ['small', 'medium', 'large'];
 
-    return (
-        <div className="app-header">
-            <h2>{imie} {nazwisko}</h2>
-            <div className="app-header-czcionki">
-                {czcionki.map(c => (<span key={c} title={c} onClick={() => onZmianaCzcionki(c)} style={{ fontSize: c }}>A</span>))}
-            </div>
-        </div>
-    );
+  const rozmiaryCzcionek = {
+    small: '14px',
+    medium: '20px',
+    large: '28px'
+  };
+
+  return (
+    <div style={{ fontSize: rozmiaryCzcionek[czcionka] }}>
+      <h2>{imie} {nazwisko}</h2>
+      <div>
+        {czcionki.map(c => (
+          <span
+            key={c}
+            onClick={() => setCzcionka(c)}
+            style={{fontSize: rozmiaryCzcionek[c]}}> A </span>
+        ))}
+      </div>
+    </div>
+  );
 }
